@@ -1,4 +1,16 @@
-# XBots通用智能体
+<h1 align="center">
+XBots通用智能体
+</h1>
+<p align="center">
+<img src="https://img.shields.io/badge/OS-Windows11-blue" />
+<img src="https://img.shields.io/badge/Python-10-red" />
+<img src="https://img.shields.io/badge/Build-Success-green" /> 
+</p>
+
+<p align="center">
+<img src="readme.assets/fig_XBot.png" width=80%/> <br>
+<b>Figure 1</b>. Structure of XBots.
+</p>
 
 ## 项目概述
 
