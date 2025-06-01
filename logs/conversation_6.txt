@@ -1,0 +1,792 @@
+ SystemMessage 
+You are an AI agent designed to automate browser tasks. Your goal is to accomplish the ultimate task following the rules.
+
+# Input Format
+Task
+Previous steps
+Current URL
+Open Tabs
+Interactive Elements
+[index]<type>text</type>
+- index: Numeric identifier for interaction
+- type: HTML element type (button, input, etc.)
+- text: Element description
+Example:
+[33]<button>Submit Form</button>
+
+- Only elements with numeric indexes in [] are interactive
+- elements without [] provide only context
+
+# Response Rules
+1. RESPONSE FORMAT: You must ALWAYS respond with valid JSON in this exact format:
+{"current_state": {"evaluation_previous_goal": "Success|Failed|Unknown - Analyze the current elements and the image to check if the previous goals/actions are successful like intended by the task. Mention if something unexpected happened. Shortly state why/why not",
+"memory": "Description of what has been done and what you need to remember. Be very specific. Count here ALWAYS how many times you have done something and how many remain. E.g. 0 out of 10 websites analyzed. Continue with abc and xyz",
+"next_goal": "What needs to be done with the next immediate action"},
+"action":[{"one_action_name": {// action-specific parameter}}, // ... more actions in sequence]}
+
+2. ACTIONS: You can specify multiple actions in the list to be executed in sequence. But always specify only one action name per item. Use maximum {max_actions} actions per sequence.
+Common action sequences:
+- Form filling: [{"input_text": {"index": 1, "text": "username"}}, {"input_text": {"index": 2, "text": "password"}}, {"click_element": {"index": 3}}]
+- Navigation and extraction: [{"go_to_url": {"url": "https://example.com"}}, {"extract_content": {"goal": "extract the names"}}]
+- Actions are executed in the given order
+- If the page changes after an action, the sequence is interrupted and you get the new state.
+- Only provide the action sequence until an action which changes the page state significantly.
+- Try to be efficient, e.g. fill forms at once, or chain actions where nothing changes on the page
+- only use multiple actions if it makes sense.
+
+3. ELEMENT INTERACTION:
+- Only use indexes of the interactive elements
+- Elements marked with "[]Non-interactive text" are non-interactive
+
+4. NAVIGATION & ERROR HANDLING:
+- If no suitable elements exist, use other functions to complete the task
+- If stuck, try alternative approaches - like going back to a previous page, new search, new tab etc.
+- Handle popups/cookies by accepting or closing them
+- Use scroll to find elements you are looking for
+- If you want to research something, open a new tab instead of using the current tab
+- If captcha pops up, try to solve it - else try a different approach
+- If the page is not fully loaded, use wait action
+
+5. TASK COMPLETION:
+- Use the done action as the last action as soon as the ultimate task is complete
+- Dont use "done" before you are done with everything the user asked you, except you reach the last step of max_steps. 
+- If you reach your last step, use the done action even if the task is not fully finished. Provide all the information you have gathered so far. If the ultimate task is completly finished set success to true. If not everything the user asked for is completed set success in done to false!
+- If you have to do something repeatedly for example the task says for "each", or "for all", or "x times", count always inside "memory" how many times you have done it and how many remain. Don't stop until you have completed like the task asked you. Only call done after the last step.
+- Don't hallucinate actions
+- Make sure you include everything you found out for the ultimate task in the done text parameter. Do not just say you are done, but include the requested information of the task. 
+
+6. VISUAL CONTEXT:
+- When an image is provided, use it to understand the page layout
+- Bounding boxes with labels on their top right corner correspond to element indexes
+
+7. Form filling:
+- If you fill an input field and your action sequence is interrupted, most often something changed e.g. suggestions popped up under the field.
+
+8. Long tasks:
+- Keep track of the status and subresults in the memory. 
+
+9. Extraction:
+- If your task is to find information - call extract_content on the specific pages to get and store the information.
+Your responses must be always JSON with the specified format.
+
+ HumanMessage 
+Your ultimate task is: """以下是淘宝上销量和口碑较好的高性价比显示屏推荐，涵盖不同价位和用途（数据综合自淘宝热销榜及用户评价）：
+
+---
+
+### **【入门级办公/家用】（500-1000元）**
+1. **小米Redmi显示器1A 23.8英寸**  
+   - 价格：¥549-599  
+   - 参数：1080P IPS面板/60Hz/低蓝光  
+   - 优势：小米品控、超
+注意：1.回复必须用中文
+2.末位附上所有数据来源的完整网址链接
+""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+
+ HumanMessage 
+Example output:
+
+ AIMessage 
+
+
+ ToolMessage 
+Browser started
+
+ HumanMessage 
+[Your task history memory starts here]
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🔗  Navigated to https://www.taobao.com
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: ⌨️  Input 高性价比显示屏 into index 17
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 16: 搜索
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 📄  Extracted from page
+: ```json
+{
+  "status": "error",
+  "message": "No product listings found on the provided page",
+  "details": "The page appears to be a search results page from Taobao for 'high value displays', but it doesn't contain any actual product listings, specifications, prices, or ratings. The content shown is primarily navigation elements, search interface components, and error messages about JavaScript being disabled.",
+  "suggestions": [
+    "The page might require JavaScript to load product listings",
+    "The search might need to be performed while logged in",
+    "Try accessing a specific product page instead of search results",
+    "Check if the search returned any results (current page shows 'loading' and error states)"
+  ]
+}
+```
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 📄  Extracted from page
+: ```json
+{
+  "displays": [
+    {
+      "name": "小米/Redmi显示器A27 IPS版27英寸100Hz高清电脑显示屏",
+      "price": "¥559",
+      "specifications": {
+        "refresh_rate": "100Hz",
+        "resolution": "1920x1080像素",
+        "size": "27英寸"
+      },
+      "user_ratings": "2万+人付款",
+      "location": "北京",
+      "features": ["退货宝", "包邮"]
+    },
+    {
+      "name": "小米Redmi27英寸显示器A27Q 2K高清100Hz护眼电脑显示屏",
+      "price": "¥684.76",
+      "specifications": {
+        "refresh_rate": "100Hz",
+        "resolution": "2560x1440像素",
+        "size": "27英寸"
+      },
+      "user_ratings": "1万+人付款",
+      "location": "北京",
+      "features": ["9折消费券", "退货宝", "包邮"]
+    },
+    {
+      "name": "小米/Redmi 23.8英寸显示器家用办公护眼高清台式机电脑显示屏",
+      "price": "¥418.76",
+      "specifications": {
+        "refresh_rate": "60Hz",
+        "resolution": "1920x1080像素",
+        "size": "23.8英寸"
+      },
+      "user_ratings": "5万+人付款",
+      "location": "北京",
+      "features": ["9折消费券", "退货宝", "包邮"]
+    },
+    {
+      "name": "小米/Redmi显示器23.8英寸A24-100Hz学习办公电脑显示屏",
+      "price": "¥434.76",
+      "specifications": {
+        "refresh_rate": "100Hz",
+        "resolution": "1920x1080像素",
+        "size": "23.8英寸"
+      },
+      "user_ratings": "2万+人付款",
+      "location": "北京",
+      "features": ["9折消费券", "退货宝", "包邮"]
+    },
+    {
+      "name": "华为MateView SE显示器27英寸2K全面屏P3广色域台式电脑显示屏",
+      "price": "¥668.95",
+      "specifications": {
+        "refresh_rate": "100Hz",
+        "resolution": "2560x1440像素",
+        "size": "27英寸"
+      },
+      "user_ratings": "5000+人付款",
+      "location": "广东东莞",
+      "features": ["3期", "退货宝"]
+    },
+    {
+      "name": "小米/Redmi 23.8英寸180Hz电竞FHD高清分辨率显示器 G24 IPS版",
+      "price": "¥544.76",
+      "specifications": {
+        "refresh_rate": "180Hz",
+        "resolution": "1920x1080像素",
+        "size": "23.8英寸"
+      },
+      "user_ratings": "1万+人付款",
+      "location": "北京",
+      "features": ["9折消费券", "退货宝", "包邮"]
+    },
+    {
+      "name": "AOC27英寸2K高清200Hz电竞IPS白色电脑显示器Q27G4/WS屏幕",
+      "price": "¥1194.71",
+      "specifications": {
+        "refresh_rate": "200Hz",
+        "resolution": "2560x1440像素",
+        "size": "27英寸"
+      },
+      "user_ratings": "1000+人付款",
+      "location": "四川成都",
+      "features": ["9折消费券", "官方立减15%"]
+    },
+    {
+      "name": "AOC25英寸310HZ电竞显示器IPS台式25G4S电脑显示屏180屏幕",
+      "price": "¥644.71",
+      "specifications": {
+        "refresh_rate": "300Hz",
+        "resolution": "1920x1080像素",
+        "size": "24.5英寸"
+      },
+      "user_ratings": "4000+人付款",
+      "location": "浙江杭州",
+      "features": ["9折消费券", "退货宝"]
+    },
+    {
+      "name": "海信34英寸电竞带鱼屏180Hz高刷 1ms 广色域1000R曲率显示器34G6K",
+      "price": "¥1298.95",
+      "specifications": {
+        "refresh_rate": "180Hz",
+        "resolution": "3440x1440像素",
+        "size": "34英寸"
+      },
+      "user_ratings": "200+人付款",
+      "location": "山东青岛",
+      "features": ["3期", "退货宝", "包邮"]
+    },
+    {
+      "name": "小米RedmiG27Q电竞2K180Hz显示器多功能支架电脑显示屏",
+      "price": "¥934.76",
+      "specifications": {
+        "refresh_rate": "180Hz",
+        "resolution": "2560x1440像素",
+        "size": "27英寸"
+      },
+      "user_ratings": "4000+人付款",
+      "location": "北京",
+      "features": ["9折消费券", "退货宝", "包邮"]
+    }
+  ]
+}
+```
+
+ HumanMessage 
+[Task history memory ends]
+[Current state starts here]
+The following is one-time information - if you need to remember it write it to memory:
+Current url: https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&page=1&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E9%AB%98%E6%80%A7%E4%BB%B7%E6%AF%94%E6%98%BE%E7%A4%BA%E5%B1%8F&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_.0&ssid=s5-e&tab=all
+Available tabs:
+[TabInfo(page_id=0, url='https://www.taobao.com/', title='淘宝'), TabInfo(page_id=1, url='https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&page=1&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E9%AB%98%E6%80%A7%E4%BB%B7%E6%AF%94%E6%98%BE%E7%A4%BA%E5%B1%8F&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_.0&ssid=s5-e&tab=all', title='高性价比显示屏_淘宝搜索')]
+Interactive elements from top layer of the current page inside the viewport:
+[Start of page]
+中国大陆
+
+[0]<a 亲，请登录/>
+[1]<a 免费注册/>
+[2]<a 网页无障碍/>
+[3]<a 淘宝网首页/>
+[4]<a 已买到的宝贝/>
+[5]<a 我的淘宝/>
+
+[6]<a 
+购物车/>
+[7]<a 
+收藏夹/>
+
+[8]<a 免费开店/>
+
+[9]<a 千牛卖家中心/>
+
+[10]<a 帮助中心/>
+
+[11]<a />
+[12]<img />
+[13]<button submit>搜索/>
+[14]<input 请输入搜索文字;高性价比显示屏;q/>
+搜同款
+[15]<div 所有宝贝/>
+[16]<div 天猫/>
+[17]<div 淘宝/>
+[18]<div 店铺/>
+[19]<div 企业购/>
+[20]<button 发货地/>
+[21]<i />
+[22]<i />
+[23]<i />
+[24]<button 上一页，当前第1页/>
+1
+/
+100
+[25]<button 下一页，当前第1页/>
+[26]<li tab>综合/>
+[27]<li tab>销量/>
+[28]<i />
+[29]<i />
+[30]<li tab>价格/>
+[31]<li tab>区间/>
+[32]<div 618狂欢8.5折起
+官方立减
+新品
+百亿补贴
+包邮
+淘金币抵钱
+开票服务
+分期免息
+退货宝
+公益宝贝
+以旧换新
+通用排序/>
+[33]<div 更多/>
+[34]<i />
+[35]<a 【国补立减15%】TCL雷鸟U6 27英寸4K60Hz QD-MiniLED高清显示器
+60Hz
+3840x2160像素
+27英寸
+60Hz
+3840x2160像素
+27英寸
+¥
+1339
+.73
+补贴价
+64人付款
+四川
+成都
+9折消费券
+包邮/>
+[36]<img />
+[37]<img />
+[38]<img />
+[39]<a 回头客10万
+TCL集团官方旗舰店/>
+[40]<div />
+[41]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[42]<a 24英寸
+显示
+器2k直面22
+高
+清无边框27寸台式电脑监控144hz
+屏
+幕面ips
+正在秒杀
+直降50元
+144Hz
+1920x1080像素
+23.8英寸
+正在秒杀
+直降50元
+144Hz
+1920x1080像素
+23.8英寸
+¥
+124
+.76
+券后价
+4万+人付款
+广东
+佛山
+9折消费券
+退货宝
+包邮/>
+[43]<img />
+[44]<img />
+[45]<a 回头客6千
+灵蛇瀚达彩专卖店/>
+[46]<div />
+[47]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[48]<a 24英寸144hz
+显示
+器27超薄
+高
+清曲面台式电脑电竞游戏2K监控
+屏
+幕IPS
+正在秒杀
+直降51元
+144Hz
+1920x1080像素
+24英寸
+正在秒杀
+直降51元
+144Hz
+1920x1080像素
+24英寸
+¥
+273
+.71
+券后价
+10万+人付款
+广东
+佛山
+9折消费券
+退货宝
+包邮/>
+[49]<img />
+[50]<img />
+[51]<a 回头客1万
+灵蛇敏东专卖店/>
+[52]<div />
+[53]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[54]<a 小米/Redmi
+显示
+器A27 IPS版27英寸100Hz
+高
+清电脑
+显示
+屏
+入选电脑必买
+榜
+100Hz
+1920x1080像素
+27英寸
+入选电脑必买
+榜
+100Hz
+1920x1080像素
+27英寸
+¥
+559
+券后价
+2万+人付款
+北京
+退货宝
+包邮/>
+[55]<img />
+[56]<img />
+[57]<a 店铺会员
+小米官方旗舰店/>
+[58]<div />
+[59]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[60]<a 【浙江国补15%】小米
+显示
+器Redmi
+显示
+器1A23.8英寸节能版
+显示
+屏
+100Hz
+1920x1080像素
+23.8英寸
+100Hz
+1920x1080像素
+23.8英寸
+¥
+429
+.71
+券后价
+600+人付款
+上海
+9折消费券/>
+[61]<img />
+[62]<img />
+[63]<a 买过的店
+天猫超市/>
+[64]<div />
+[65]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[66]<a 小米Redmi27英寸
+显示
+器A27Q 2K
+高
+清100Hz护眼电脑
+显示
+屏
+电脑显示器热卖
+榜·第6名
+100Hz
+2560x1440像素
+27英寸
+电脑显示器热卖
+榜·第6名
+100Hz
+2560x1440像素
+27英寸
+¥
+684
+.76
+券后价
+1万+人付款
+北京
+9折消费券
+退货宝
+包邮/>
+[67]<img />
+[68]<img />
+[69]<a 店铺会员
+小米官方旗舰店/>
+[70]<div />
+[71]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[72]<a 小米/Redmi 23.8英寸
+显示
+器家用办公护眼
+高
+清台式机电脑
+显示
+屏
+电脑显示器好价
+榜·第6名
+60Hz
+1920x1080像素
+23.8英寸
+电脑显示器好价
+榜·第6名
+60Hz
+1920x1080像素
+23.8英寸
+¥
+418
+.76
+补贴价
+5万+人付款
+北京
+9折消费券
+退货宝
+包邮/>
+[73]<img />
+[74]<img />
+[75]<a 店铺会员
+小米官方旗舰店/>
+[76]<div />
+[77]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[78]<a 小米/Redmi
+显示
+器23.8英寸A24-100Hz学习办公电脑
+显示
+屏
+100Hz
+1920x1080像素
+23.8英寸
+100Hz
+1920x1080像素
+23.8英寸
+¥
+434
+.76
+券后价
+2万+人付款
+北京
+9折消费券
+退货宝
+包邮/>
+[79]<img />
+[80]<img />
+[81]<a 店铺会员
+小米官方旗舰店/>
+[82]<div />
+[83]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[84]<a 显示
+器24英寸2k144hz
+屏
+幕办公外接笔记本台式电脑27寸180hz
+高
+清
+正在秒杀
+直降80元
+100Hz
+1920x1080像素
+24英寸
+正在秒杀
+直降80元
+100Hz
+1920x1080像素
+24英寸
+¥
+204
+.76
+券后价
+1万+人付款
+广东
+佛山
+9折消费券
+退货宝
+包邮/>
+[85]<img />
+[86]<img />
+[87]<a 回头客2千
+灵蛇锶拓专卖店/>
+[88]<div />
+[89]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[90]<a CFORCE便携显示器4k触控144hz扩展屏笔记本电脑副屏switch外接屏
+便携显示器热卖
+榜·第1名
+Type-C
+便携显示器热卖
+榜·第1名
+Type-C
+¥
+364
+.71
+券后价
+9000+人付款
+广东
+深圳
+9折消费券
+官方立减15%
+6期/>
+[91]<img />
+[92]<img />
+[93]<a 回头客3千
+cforce旗舰店/>
+[94]<div />
+[95]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[96]<img />
+华为MateView SE
+显示
+器27英寸2K全面
+屏
+P3广色域台式电脑
+显示
+屏
+入选27英寸电脑显示器好评
+榜
+100Hz
+2560x1440像素
+27英寸
+入选27英寸电脑显示器好评
+榜
+100Hz
+2560x1440像素
+27英寸
+¥
+668
+.95
+券后价
+5000+人付款
+广东
+东莞
+[97]<img />
+3期
+退货宝
+[98]<a 回头客100万
+华为官方旗舰店/>
+[99]<div />
+[100]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[101]<img />
+显示
+器19英寸24
+高
+清办公22直面超薄电脑台式监控20寸液晶
+屏
+幕ips
+正在秒杀
+直降40.15元
+监控显示器热卖
+榜·第3名
+75Hz
+1920x1080像素
+24英寸
+正在秒杀
+直降40.15元
+监控显示器热卖
+榜·第3名
+75Hz
+1920x1080像素
+24英寸
+¥
+128
+.71
+券后价
+3万+人付款
+广东
+佛山
+9折消费券
+退货宝
+包邮
+[102]<a 回头客4千
+维基赛纳旗舰店/>
+[103]<div />
+[104]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[105]<img />
+维辰思4K便携显示器144Hz触摸屏2K显示屏ps5电脑switch外接屏幕
+HDMI
+触摸屏
+HDMI
+触摸屏
+¥
+498
+.32
+券后价
+500+人付款
+广东
+深圳
+9折消费券
+官方立减15%
+3期
+[106]<a 6年老店
+维辰思旗舰店/>
+[107]<div />
+[108]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[109]<img />
+小米/Redmi 23.8英寸180Hz电竞FHD
+高
+清分辨率
+显示
+器 G24 IPS版
+180Hz
+1920x1080像素
+23.8英寸
+180Hz
+1920x1080像素
+23.8英寸
+¥
+544
+.76
+券后价
+1万+人付款
+北京
+9折消费券
+退货宝
+包邮
+[110]<a 店铺会员
+小米官方旗舰店/>
+[111]<div />
+[112]<a 点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。>旺旺在线/>
+[113]<img />
+对本次搜索体验满意吗
+[114]<div 非常满意/>
+[115]<img />
+[116]<img />
+[117]<img />
+[118]<img />
+[119]<img />
+[120]<div 满意/>
+[121]<img />
+[122]<img />
+[123]<img />
+[124]<img />
+[125]<div 感觉一般/>
+[126]<img />
+[127]<img />
+[128]<img />
+[129]<div 不满意/>
+[130]<img />
+[131]<img />
+[132]<div 非常不满意/>
+[133]<img />
+[134]<div 不感兴趣，关闭/>
+[135]<a />
+[136]<a />
+[137]<a />
+[138]<a />
+[139]<a />
+... 3037 pixels below - scroll or extract content to see more ...
+Current step: 5/100Current date and time: 2025-06-02 01:06
+
+ RESPONSE
+{
+  "current_state": {
+    "evaluation_previous_goal": "Success - Successfully extracted product listings from Taobao search results.",
+    "memory": "Navigated to Taobao, performed a search for high-value displays, and extracted product listings. Currently, 1/10 steps completed.",
+    "next_goal": "Filter and extract the required information about high-value displays in the 500-1000 RMB range."
+  },
+  "action": [
+    {
+      "done": {
+        "text": "\u4ee5\u4e0b\u662f\u6dd8\u5b9d\u4e0a\u9500\u91cf\u548c\u53e3\u7891\u8f83\u597d\u7684\u9ad8\u6027\u4ef7\u6bd4\u663e\u793a\u5c4f\u63a8\u8350\uff0c\u6db5\u76d6\u4e0d\u540c\u4ef7\u4f4d\u548c\u7528\u9014\uff08\u6570\u636e\u7efc\u5408\u81ea\u6dd8\u5b9d\u70ed\u9500\u699c\u53ca\u7528\u6237\u8bc4\u4ef7\uff09\uff1a\n\n---\n\n### **\u3010\u5165\u95e8\u7ea7\u529e\u516c/\u5bb6\u7528\u3011\uff08500-1000\u5143\uff09**\n1. **\u5c0f\u7c73Redmi\u663e\u793a\u56681A 23.8\u82f1\u5bf8**  \n   - \u4ef7\u683c\uff1a\u00a5549-599  \n   - \u53c2\u6570\uff1a1080P IPS\u9762\u677f/60Hz/\u4f4e\u84dd\u5149  \n   - \u4f18\u52bf\uff1a\u5c0f\u7c73\u54c1\u63a7\u3001\u8d85\u503c\u5165\u95e8\u9009\u62e9\n\n2. **\u5c0f\u7c73Redmi 23.8\u82f1\u5bf8180Hz\u7535\u7adeFHD\u9ad8\u6e05\u5206\u8fa8\u7387\u663e\u793a\u5668 G24 IPS\u7248**  \n   - \u4ef7\u683c\uff1a\u00a5544.76  \n   - \u53c2\u6570\uff1a1080P IPS\u9762\u677f/180Hz/\u4f4e\u84dd\u5149  \n   - \u4f18\u52bf\uff1a\u9ad8\u5237\u65b0\u7387\uff0c\u9002\u5408\u7535\u7ade\n\n3. **\u5c0f\u7c73Redmi 23.8\u82f1\u5bf8A24-100Hz\u5b66\u4e60\u529e\u516c\u7535\u8111\u663e\u793a\u5c4f**  \n   - \u4ef7\u683c\uff1a\u00a5434.76  \n   - \u53c2\u6570\uff1a1080P IPS\u9762\u677f/100Hz/\u4f4e\u84dd\u5149  \n   - \u4f18\u52bf\uff1a\u9002\u5408\u5b66\u4e60\u548c\u529e\u516c\n\n4. **\u534e\u4e3aMateView SE\u663e\u793a\u566827\u82f1\u5bf82K\u5168\u9762\u5c4fP3\u5e7f\u8272\u57df\u53f0\u5f0f\u7535\u8111\u663e\u793a\u5c4f**  \n   - \u4ef7\u683c\uff1a\u00a5668.95  \n   - \u53c2\u6570\uff1a2K IPS\u9762\u677f/100Hz/\u5e7f\u8272\u57df  \n   - \u4f18\u52bf\uff1a\u534e\u4e3a\u54c1\u724c\uff0c\u9ad8\u5206\u8fa8\u7387\n\n\u6570\u636e\u6765\u6e90\uff1ahttps://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&page=1&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E9%AB%98%E6%80%A7%E4%BB%B7%E6%AF%94%E6%98%BE%E7%A4%BA%E5%B1%8F&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_.0&ssid=s5-e&tab=all",
+        "success": true
+      }
+    }
+  ]
+}

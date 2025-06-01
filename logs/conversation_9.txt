@@ -1,0 +1,491 @@
+ SystemMessage 
+You are an AI agent designed to automate browser tasks. Your goal is to accomplish the ultimate task following the rules.
+
+# Input Format
+Task
+Previous steps
+Current URL
+Open Tabs
+Interactive Elements
+[index]<type>text</type>
+- index: Numeric identifier for interaction
+- type: HTML element type (button, input, etc.)
+- text: Element description
+Example:
+[33]<button>Submit Form</button>
+
+- Only elements with numeric indexes in [] are interactive
+- elements without [] provide only context
+
+# Response Rules
+1. RESPONSE FORMAT: You must ALWAYS respond with valid JSON in this exact format:
+{"current_state": {"evaluation_previous_goal": "Success|Failed|Unknown - Analyze the current elements and the image to check if the previous goals/actions are successful like intended by the task. Mention if something unexpected happened. Shortly state why/why not",
+"memory": "Description of what has been done and what you need to remember. Be very specific. Count here ALWAYS how many times you have done something and how many remain. E.g. 0 out of 10 websites analyzed. Continue with abc and xyz",
+"next_goal": "What needs to be done with the next immediate action"},
+"action":[{"one_action_name": {// action-specific parameter}}, // ... more actions in sequence]}
+
+2. ACTIONS: You can specify multiple actions in the list to be executed in sequence. But always specify only one action name per item. Use maximum {max_actions} actions per sequence.
+Common action sequences:
+- Form filling: [{"input_text": {"index": 1, "text": "username"}}, {"input_text": {"index": 2, "text": "password"}}, {"click_element": {"index": 3}}]
+- Navigation and extraction: [{"go_to_url": {"url": "https://example.com"}}, {"extract_content": {"goal": "extract the names"}}]
+- Actions are executed in the given order
+- If the page changes after an action, the sequence is interrupted and you get the new state.
+- Only provide the action sequence until an action which changes the page state significantly.
+- Try to be efficient, e.g. fill forms at once, or chain actions where nothing changes on the page
+- only use multiple actions if it makes sense.
+
+3. ELEMENT INTERACTION:
+- Only use indexes of the interactive elements
+- Elements marked with "[]Non-interactive text" are non-interactive
+
+4. NAVIGATION & ERROR HANDLING:
+- If no suitable elements exist, use other functions to complete the task
+- If stuck, try alternative approaches - like going back to a previous page, new search, new tab etc.
+- Handle popups/cookies by accepting or closing them
+- Use scroll to find elements you are looking for
+- If you want to research something, open a new tab instead of using the current tab
+- If captcha pops up, try to solve it - else try a different approach
+- If the page is not fully loaded, use wait action
+
+5. TASK COMPLETION:
+- Use the done action as the last action as soon as the ultimate task is complete
+- Dont use "done" before you are done with everything the user asked you, except you reach the last step of max_steps. 
+- If you reach your last step, use the done action even if the task is not fully finished. Provide all the information you have gathered so far. If the ultimate task is completly finished set success to true. If not everything the user asked for is completed set success in done to false!
+- If you have to do something repeatedly for example the task says for "each", or "for all", or "x times", count always inside "memory" how many times you have done it and how many remain. Don't stop until you have completed like the task asked you. Only call done after the last step.
+- Don't hallucinate actions
+- Make sure you include everything you found out for the ultimate task in the done text parameter. Do not just say you are done, but include the requested information of the task. 
+
+6. VISUAL CONTEXT:
+- When an image is provided, use it to understand the page layout
+- Bounding boxes with labels on their top right corner correspond to element indexes
+
+7. Form filling:
+- If you fill an input field and your action sequence is interrupted, most often something changed e.g. suggestions popped up under the field.
+
+8. Long tasks:
+- Keep track of the status and subresults in the memory. 
+
+9. Extraction:
+- If your task is to find information - call extract_content on the specific pages to get and store the information.
+Your responses must be always JSON with the specified format.
+
+ HumanMessage 
+Your ultimate task is: """以下是淘宝/京东销量较高的蓝牙鼠标推荐（按价格排序，数据来自公开平台）：
+
+---
+
+### **高性价比款（50-100元）**
+1. **罗技 Pebble 鹅卵石**  
+   - 价格：¥89-99  
+   - 特点：超薄静音、蓝牙/2.4G双模、18个月续航  
+   - 月销量：10万+  
+
+2. **小米无线蓝牙鼠标 Lite**  
+  
+['回复必须用中文', '末位附上所有数据来源的完整网址链接']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+
+ HumanMessage 
+Example output:
+
+ AIMessage 
+
+
+ ToolMessage 
+Browser started
+
+ HumanMessage 
+[Your task history memory starts here]
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🔗  Opened new tab with https://www.taobao.com
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: ⌨️  Input 蓝牙鼠标 into index 17
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 16: 搜索
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: ⌨️  Input 蓝牙鼠标 into index 17
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 16: 搜索
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 📄  Extracted from page
+: ```json
+{
+  "top_selling_bluetooth_mice": [
+    {
+      "name": "线条小狗联名倍思无线蓝牙鼠标静音苹果华为平板人体工学鼠标",
+      "price": "¥53.81",
+      "features": "4000dpi, IP联名款",
+      "monthly_sales": "8万+人付款"
+    },
+    {
+      "name": "联想生态异能者无线蓝牙鼠标轻音办公滑鼠双模电脑鼠标",
+      "price": "¥32.26",
+      "features": "1600dpi, 无线蓝牙双模",
+      "monthly_sales": "1万+人付款"
+    },
+    {
+      "name": "无线鼠标笔记本静音蓝牙可充电款适用戴尔华硕联想小米华为电脑",
+      "price": "¥15.17",
+      "features": "16000dpi, 无线",
+      "monthly_sales": "8000+人付款"
+    },
+    {
+      "name": "小米无线蓝牙双模鼠标2无线2.4G滑鼠轻音办公笔记本电脑蓝牙鼠标",
+      "price": "¥64.76",
+      "features": "光电, 淘宝秒杀鼠标热销榜·第8名",
+      "monthly_sales": "6万+人付款"
+    },
+    {
+      "name": "英菲克M1二代无线鼠标蓝牙静音无声typec可充电笔记本男女生无限",
+      "price": "¥22.49",
+      "features": "2400dpi, 光电",
+      "monthly_sales": "10万+人付款"
+    },
+    {
+      "name": "英菲克M1无线鼠标蓝牙静音无声笔记本电脑可充电男女生适用于苹果",
+      "price": "¥18.78",
+      "features": "2400dpi, 光电",
+      "monthly_sales": "50万+人付款"
+    },
+    {
+      "name": "HUAWEI 蓝牙鼠标（第二代）青春版 3设备切换 靠近发现 轻巧便携",
+      "price": "¥88.95",
+      "features": "光电, 5号电池蓝牙",
+      "monthly_sales": "6万+人付款"
+    },
+    {
+      "name": "无线鼠标蓝牙静音无声充电游戏电竞台式笔记本电脑办公通用女生男",
+      "price": "¥29.15",
+      "features": "2400dpi, 光电",
+      "monthly_sales": "6000+人付款"
+    },
+    {
+      "name": "联想生态品牌异能者无线鼠标蓝牙无线充电笔记本电脑办公家用多彩",
+      "price": "¥31.26",
+      "features": "1600dpi, 无线",
+      "monthly_sales": "1万+人付款"
+    },
+    {
+      "name": "【新品】倍思无线蓝牙鼠标静音适用苹果macbook女生电脑人体工学",
+      "price": "¥44.61",
+      "features": "4000dpi, 光电",
+      "monthly_sales": "400+人付款"
+    }
+  ]
+}
+```
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🔗  Opened new tab with https://www.jd.com
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: ⌨️  Input 蓝牙鼠标 into index 7
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 9: 
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🖱️  Clicked button with index 11: 手机
+
+ HumanMessage 
+[Task history memory ends]
+[Current state starts here]
+The following is one-time information - if you need to remember it write it to memory:
+Current url: https://www.jd.com/?from=pc_search_sd
+Available tabs:
+[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.taobao.com/', title='淘宝'), TabInfo(page_id=2, url='https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&page=1&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E8%93%9D%E7%89%99%E9%BC%A0%E6%A0%87&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_.0&ssid=s5-e&tab=all', title='蓝牙鼠标_淘宝搜索'), TabInfo(page_id=3, url='https://www.jd.com/?from=pc_search_sd', title='京东(JD.COM)-正品低价、品质保障、配送及时、轻松购物！'), TabInfo(page_id=4, url='https://www.jd.com/?from=pc_search_sd', title='京东(JD.COM)-正品低价、品质保障、配送及时、轻松购物！')]
+Interactive elements from top layer of the current page inside the viewport:
+[Start of page]
+[0]<a 你好，请登录/>
+[1]<a 免费注册/>
+[2]<a 我的订单/>
+[3]<a 我的京东/>
+
+[4]<a 京东会员/>
+[5]<a 企业采购/>
+客户服务
+
+网站导航
+
+手机京东
+[6]<a 京东/>
+[7]<input 搜索;text/>
+
+[8]<a />
+[9]<button 搜索>/>
+[10]<a 家用电器/>
+[11]<a 手机/>
+/
+[12]<a 运营商/>
+/
+[13]<a 数码/>
+[14]<a 电脑/>
+/
+[15]<a 办公/>
+/
+[16]<a 文具用品/>
+[17]<a 家居/>
+/
+[18]<a 家具/>
+/
+[19]<a 家装/>
+/
+[20]<a 厨具/>
+[21]<a 男装/>
+/
+[22]<a 女装/>
+/
+[23]<a 童装/>
+/
+[24]<a 内衣/>
+[25]<a 美妆/>
+/
+[26]<a 个护清洁/>
+/
+[27]<a 宠物/>
+[28]<a 女鞋/>
+/
+[29]<a 箱包/>
+/
+[30]<a 钟表/>
+/
+[31]<a 珠宝/>
+[32]<a 男鞋/>
+/
+[33]<a 运动/>
+/
+[34]<a 户外/>
+[35]<a 房产/>
+/
+[36]<a 汽车/>
+/
+[37]<a 汽车用品/>
+[38]<a 母婴/>
+/
+[39]<a 玩具乐器/>
+[40]<a 食品/>
+/
+[41]<a 酒类/>
+/
+[42]<a 生鲜/>
+/
+[43]<a 特产/>
+艺术
+/
+礼品鲜花
+/
+农牧园艺
+京东买药
+/
+计生情趣
+图书
+/
+文娱
+/
+教育
+/
+电子书
+机票
+/
+酒店
+/
+旅游
+/
+生活
+支付
+/
+白条
+/
+保险
+/
+企业金融
+安装
+/
+维修
+/
+清洗
+/
+二手
+元器件
+/
+原材料
+/
+五金机电
+品类齐全，轻松购物
+多仓直发，极速配送
+好
+正品行货，精致服务
+省
+天天低价，畅选无忧
+购物指南
+[44]<a 购物流程/>
+[45]<a 会员介绍/>
+[46]<a 生活旅行/>
+[47]<a 常见问题/>
+[48]<a 大家电/>
+[49]<a 联系客服/>
+配送方式
+[50]<a 上门自提/>
+[51]<a 211限时达/>
+[52]<a 配送服务查询/>
+[53]<a 配送费收取标准/>
+支付方式
+[54]<a 货到付款/>
+[55]<a 在线支付/>
+[56]<a 分期付款/>
+[57]<a 公司转账/>
+售后服务
+[58]<a 售后政策/>
+[59]<a 价格保护/>
+[60]<a 退款说明/>
+[61]<a 返修/退换货/>
+[62]<a 取消订单/>
+特色服务
+[63]<a 夺宝岛/>
+[64]<a DIY装机/>
+[65]<a 延保服务/>
+[66]<a 京东E卡/>
+[67]<a 京东通信/>
+[68]<a 京鱼座智能/>
+[69]<a 关于我们/>
+|
+[70]<a 联系我们/>
+|
+[71]<a 联系客服/>
+|
+[72]<a 合作招商/>
+|
+[73]<a 商家帮助/>
+|
+[74]<a 营销中心/>
+|
+[75]<a 手机京东/>
+|
+[76]<a 友情链接/>
+|
+[77]<a 销售联盟/>
+|
+[78]<a 京东社区/>
+|
+[79]<a 风险监测/>
+|
+[80]<a 质量公告/>
+|
+[81]<a 隐私政策/>
+|
+[82]<a 京东公益/>
+|
+[83]<a Media & IR/>
+[84]<a 京公网安备 11000002000088号/>
+|
+[85]<a 京ICP备11041704号/>
+|
+[86]<a ICP/>
+|
+[87]<a 药品医疗器械网络信息服务备案/>
+|
+[88]<a 自营医疗器械经营资质/>
+|
+[89]<a 药品网络交易第三方平台备案凭证/>
+|
+新出发京零 字第大120007号
+互联网出版许可证编号新出网证(京)字150号
+|
+[90]<a 出版物经营许可证/>
+|
+违法和不良信息举报电话：4006561155
+Copyright © 2004 - 2025  京东JINGDONG 版权所有
+|
+消费者维权热线：4006067733
+|
+[91]<a 经营证照/>
+|
+[92]<a 医疗器械第三方平台备案凭证（京）网械平台备字（2023）第00013号/>
+|
+[93]<a 营业执照/>
+|
+[94]<a 增值电信业务经营许可证/>
+京东旗下网站：
+[95]<a 京东钱包/>
+|
+[96]<a 京东云/>
+|
+网络内容从业人员违法违规行为举报电话：4006561155-3
+[97]<a 可信网站信用评估/>
+[98]<a 网络警察提醒你/>
+[99]<a 诚信网站/>
+[100]<a 中国互联网举报中心/>
+[101]<a 网络举报APP下载/>
+[102]<a 扫黄打非网举报专区/>
+[103]<a 适老化无障碍服务/>
+[104]<a 国家知识产权公共服务网/>
+... 41 pixels below - scroll or extract content to see more ...
+Current step: 8/100Current date and time: 2025-06-02 00:59
+
+ RESPONSE
+{
+  "current_state": {
+    "evaluation_previous_goal": "Failed - Clicked the wrong element (\u624b\u673a) instead of sorting by price.",
+    "memory": "Task: Find high-selling Bluetooth mice on Taobao/JD, sorted by price. Currently at step 8/100. Next: Correctly sort the search results by price on JD.",
+    "next_goal": "Sort the search results by price on JD."
+  },
+  "action": [
+    {
+      "go_to_url": {
+        "url": "https://search.jd.com/Search?keyword=%E8%93%9D%E7%89%99%E9%BC%A0%E6%A0%87"
+      }
+    },
+    {
+      "click_element": {
+        "index": 11
+      }
+    }
+  ]
+}
