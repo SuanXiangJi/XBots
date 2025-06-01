@@ -3,7 +3,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 from config_loader import get_config_value,load_append_config
-import streamlit as st
+import streamlit as st 
 
 # 加载 .env 文件
 load_dotenv()
@@ -38,6 +38,15 @@ def get_api_response(messages):
 
 def get_perfect_command(messages): 
     """生成一条合适的browser-use命令"""
+    
+    th1, th2 = st.columns([1, 14])
+    with th1:
+        think1 = st.empty()
+        think1.image("css/thinking.png", use_container_width=False,width = 40)
+    with th2:
+        think2 = st.empty()
+        think2.markdown("<h4><b>✅ 优化提问中...</b></h4>", unsafe_allow_html=True)
+
     # 读取配置并拼接
     append_rules = load_append_config() 
     print(0)
@@ -52,7 +61,19 @@ def get_perfect_command(messages):
     }
     updated_messages = messages + [fixed_cmd]
     response = call_deepseek_api(updated_messages,limit_temperature=0.4,limit_max_tokens=100) 
+    
+    think1.empty()  # 清除“思考中...”提示
+    think2.empty()  # 清除“思考中...”提示
+
     # 从响应中提取浏览器命令并拼接append_rules
+    
+    th1, th2 = st.columns([1, 14])
+    with th1:
+        think1 = st.empty()
+        think1.image("css/thinking.png", use_container_width=False,width = 40)
+    with th2:
+        think2 = st.empty()
+        think2.write(f"<h4><b>✅ 优化完成，浏览器命令已生成：{response}</b></h4>", unsafe_allow_html=True)
     browser_command = response
     final_command = f"{browser_command}\n注意："
     i=0
@@ -74,22 +95,33 @@ def evaluate_conversation(chat_type,messages):
         return (1, res_cmd)
     else:
         print("API决策中")
+        
+        thi1, thi2 = st.columns([1, 14])
+        with thi1:
+            thinking1 = st.empty()
+            thinking1.image("css/thinking.png", use_container_width=False,width = 50)
+        with thi2:
+            thinking2 = st.empty()
+            thinking2.markdown("<h4><b>🧠 API决策中 . . .</b></h4>", unsafe_allow_html=True)
         # 提取上一条用户提问内容
         last_user_message = next((msg for msg in reversed(messages) if msg["role"] == "user"), None)
         if not last_user_message:
             return (0, None)
         
         evaluation_prompt = {
-            "role": "system", 
-            "content": f"针对上一条用户提问以及上下文：“{last_user_message['content']}”，评估其是否可以直接作为一个简单的browser-use命令？可以就回复“1”，否则回复“0”（回复单个数字即可）"
+            "role": "user", 
+            "content": f"“{last_user_message['content']}”，是不是在网站上的操作？是就回复“1”，否则回复“0”（回复单个数字即可）"
         }
         
         # 添加评估指令到消息末尾
-        updated_messages = messages + [evaluation_prompt]
+        # updated_messages = messages + [evaluation_prompt]
+        updated_messages = [evaluation_prompt]
         print("原对话:",updated_messages)
         
         # 调用API
         response = call_deepseek_api(updated_messages,limit_temperature=0.1,limit_max_tokens=10)
+        thinking1.empty()  # 清除“思考中...”提示
+        thinking2.empty()  # 清除“思考中...”提示
         print("API响应:",response)
         
         # 解析响应
@@ -97,11 +129,31 @@ def evaluate_conversation(chat_type,messages):
             return (0, None)
             
         first_line = response.split('\n')[0].strip()
-        if first_line == '0':
+        if first_line == '0':  
+            th1, th2 = st.columns([1, 14])
+            with th1:
+                think1 = st.empty()
+                think1.image("css/thinking.png", use_container_width=False,width = 40)
+            with th2:
+                think2 = st.empty()
+                think2.markdown("<h4><b>✅ 已确定使用文字应答。</b></h4>", unsafe_allow_html=True)
             res_msg = get_api_response(messages)
+            
+            think1.empty()  # 清除“思考中...”提示
+            think2.empty()  # 清除“思考中...”提示
             return (0, res_msg)
         elif first_line == '1':
+            th1, th2 = st.columns([1, 14])
+            with th1:
+                think1 = st.empty()
+                think1.image("css/thinking.png", use_container_width=False,width = 40)
+            with th2:
+                think2 = st.empty()
+                think2.markdown("<h4><b>✅ 准备启动“网页帮做”模式。</b></h4>", unsafe_allow_html=True)
             res_cmd = get_perfect_command(messages)
+            
+            think1.empty()  # 清除“思考中...”提示
+            think2.empty()  # 清除“思考中...”提示
             return (1, res_cmd)
         else:# 如果API返回了其他内容，重新调用API
             i=0
@@ -158,5 +210,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    

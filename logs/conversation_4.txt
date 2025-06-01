@@ -70,15 +70,14 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """以下是淘宝上销量和口碑较好的高性价比显示屏推荐，涵盖不同价位和用途（数据综合自淘宝热销榜及用户评价）：
+Your ultimate task is: """优化后的提问建议（突出关键信息）：
 
----
+"请帮我【在淘宝平台】搜索【高销量】的【蓝牙耳机】，要求：1) 按销量排序 2) 显示前20名商品 3) 包含价格区间和店铺评分"
 
-### **【入门级办公/家用】（500-1000元）**
-1. **小米Redmi显示器1A 23.8英寸**  
-   - 价格：¥549-599  
-   - 参数：1080P IPS面板/60Hz/低蓝光  
-   - 优势：小米品控、超
+优化说明：
+1. 使用【】强调核心需求（平台/排序方式/商品类型）
+2. 将模糊的"比较高"量化为具体筛选条件
+3. 增加关键筛选维度（价格
 注意：1.回复必须用中文
 2.末位附上所有数据来源的完整网址链接
 """. If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
@@ -111,7 +110,7 @@ Action result: 🔗  Navigated to https://www.taobao.com
 
 
  HumanMessage 
-Action result: ⌨️  Input 高性价比显示屏 into index 17
+Action result: ⌨️  Input 蓝牙耳机 into index 17
 
  HumanMessage 
 Action result: 🖱️  Clicked button with index 16: 搜索
@@ -120,9 +119,9 @@ Action result: 🖱️  Clicked button with index 16: 搜索
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E9%AB%98%E6%80%A7%E4%BB%B7%E6%AF%94%E6%98%BE%E7%A4%BA%E5%B1%8F&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_.0&ssid=s5-e&tab=all
+Current url: https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_manual.0&ssid=s5-e&tab=all
 Available tabs:
-[TabInfo(page_id=0, url='https://www.taobao.com/', title='淘宝'), TabInfo(page_id=1, url='https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E9%AB%98%E6%80%A7%E4%BB%B7%E6%AF%94%E6%98%BE%E7%A4%BA%E5%B1%8F&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_.0&ssid=s5-e&tab=all', title='淘宝搜索')]
+[TabInfo(page_id=0, url='https://www.taobao.com/', title='淘宝'), TabInfo(page_id=1, url='https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_manual.0&ssid=s5-e&tab=all', title='淘宝搜索')]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
 中国大陆
@@ -161,19 +160,24 @@ Interactive elements from top layer of the current page inside the viewport:
 价格
 加载中...
 ... 614 pixels below - scroll or extract content to see more ...
-Current step: 3/100Current date and time: 2025-06-02 01:03
+Current step: 3/100Current date and time: 2025-06-02 02:36
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Success - Successfully searched for high-value displays on Taobao.",
-    "memory": "Navigated to Taobao and performed a search for high-value displays. Currently, no steps have been completed for extracting the required information.",
-    "next_goal": "Extract the list of high-value displays from the search results."
+    "evaluation_previous_goal": "Success - Successfully searched for Bluetooth earphones on Taobao.",
+    "memory": "Task: Search for high-sales Bluetooth earphones on Taobao. Steps completed: 2/10. Next: Sort results by sales volume and extract the top 20 items.",
+    "next_goal": "Sort the search results by sales volume and extract the top 20 items with price range and store ratings."
   },
   "action": [
     {
+      "click_element": {
+        "index": 12
+      }
+    },
+    {
       "extract_content": {
-        "goal": "Extract the list of high-value displays, including their prices, specifications, and user ratings."
+        "goal": "Extract the top 20 items with price range and store ratings."
       }
     }
   ]

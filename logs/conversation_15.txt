@@ -70,21 +70,17 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """# HTML烟花代码生成指南
+Your ultimate task is: """优化后的提问（突出关键词+清晰需求）：
 
-## 操作步骤
+"请帮我精选3-5篇2023年最新高考满分作文，要求：
+1. 重点突出【高考真题】来源（如全国卷/新高考卷等）
+2. 包含【议论文】和【记叙文】两种文体范例
+3. 每篇需附【得分亮点】分析
+4. 优先选择具有【时代特色】的优质范文"
 
-1. **打开代码编辑器**：使用你喜欢的文本编辑器(如VS Code、Sublime Text等)或在线编辑器(如CodePen、JSFiddle)
-
-2. **创建HTML文件**：新建一个文件，命名为`fireworks.html`
-
-3. **编写基础HTML结构**：
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>HTML烟花效果</title>
-    <style>
+（说明：通过数字分点明确
+注意：1.回复必须用中文
+2.末位附上所有数据来源的完整网址链接
 """. If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
@@ -105,23 +101,8 @@ Browser started
  ToolMessage 
 
 
- AIMessage 
-
-
- ToolMessage 
-
-
- AIMessage 
-
-
- ToolMessage 
-
-
  HumanMessage 
-Action result: 🕒  Waiting for 5 seconds
-
- HumanMessage 
-Action result: 🖱️  Clicked button with index 37:
+Action result: 🔍  Searched for "2023 高考满分作文 全国卷 新高考卷 议论文 记叙文 得分亮点 时代特色" in Google
 
  AIMessage 
 
@@ -130,7 +111,7 @@ Action result: 🖱️  Clicked button with index 37:
 
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://jsfiddle.net/
+Action result: 🖱️  Clicked button with index 18: 新鲜出炉！2023年全国各地高考作文试题汇总
 
  AIMessage 
 
@@ -139,7 +120,62 @@ Action result: 🔗  Opened new tab with https://jsfiddle.net/
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 📄  Extracted from page
+: ```json
+{
+  "page_title": "新鲜出炉！2023年全国各地高考作文试题汇总-新华网",
+  "source": "新华网",
+  "date": "2023-06-07",
+  "content": [
+    {
+      "exam": "全国甲卷",
+      "prompt": "人们因技术发展得以更好地掌控时间，但也有人因此成了时间的仆人。这句话引发了你怎样的联想与思考？请写一篇文章。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
+    },
+    {
+      "exam": "全国乙卷",
+      "prompt": "吹灭别人的灯，并不会让自己更加光明；阻挡别人的路，也不会让自己行得更远。'一花独放不是春，百花齐放春满园。'如果世界上只有一种花朵，就算这种花朵再美，那也是单调的。以上两则材料出自习近平总书记的讲话，以生动形象的语言说出了普遍的道理。请据此写一篇文章，体现你的认识与思考。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
+    },
+    {
+      "exam": "新课标I卷",
+      "prompt": "好的故事，可以帮我们更好地表达和沟通，可以触动心灵、启迪智慧；好的故事，可以改变一个人的命运，可以展现一个民族的形象……故事是有力量的。以上材料引发了你怎样的联想和思考？请写一篇文章。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
+    },
+    {
+      "exam": "新课标II卷",
+      "prompt": "本试卷语言文字运用II提到的'安静一下不被打扰'的想法，在当代青少年中也不鲜见。青少年在学习、生活中，有时希望有一个自己的空间，放松，沉淀，成长。请结合以上材料写一篇文章。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
+    },
+    {
+      "exam": "2023年北京高考作文题",
+      "options": [
+        {
+          "title": "续航",
+          "prompt": "'续航'一词，原指连续航行，今天在使用中被赋予了新的含义，如为青春续航、科技为经济发展续航等。请以'续航'为题目，写一篇议论文。",
+          "requirements": "论点明确，论据充实，论证合理；语言流畅，书写清晰。"
+        },
+        {
+          "title": "亮相",
+          "prompt": "舞台上，戏曲演员有登场亮相的瞬间。生活中也有许多亮相时刻：国旗下的讲话，研学成果的汇报，新产品的发布……每一次亮相，都受到众人关注；每一次亮相，也会有一段故事。请以'亮相'为题目，写一篇记叙文。",
+          "requirements": "思想健康，内容充实、合理，有细节描写；语言流畅，书写清晰。"
+        }
+      ]
+    },
+    {
+      "exam": "2023年高考语文（天津卷）",
+      "prompt": "与有肝胆人共事，从无字句处读书。一代人有一代人的使命与挑战，一代人有一代人的责任和担当。一个世纪前，在津求学的青年周恩来撰写了这副对联，在交友处事与读书求知方面警勉自己。品读此联，你有怎样的联想和思考？请任选角度，结合自己的体验与感悟，写一篇文章。",
+      "requirements": "自拟标题；文体不限（诗歌除外），文体特征明显；不少于800字；不得抄袭，不得套作。"
+    },
+    {
+      "exam": "2023年上海高考语文作文题",
+      "prompt": "No prompt provided in the given content.",
+      "requirements": "No requirements provided in the given content."
+    }
+  ],
+  "notes": "The page does not contain direct links to full essays but provides the prompts and requirements for the 2023 college entrance exam essays from various regions in China."
+}
+```
 
  AIMessage 
 
@@ -148,7 +184,7 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 🔍  Searched for "2023 高考满分作文 全国甲卷 人们因技术发展得以更好地控制时间" in Google
 
  AIMessage 
 
@@ -157,7 +193,7 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 🖱️  Clicked button with index 18: 【语文】2023年全国甲卷6篇优秀范文展示~_时间_科技
 
  AIMessage 
 
@@ -166,7 +202,54 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 📄  Extracted from page
+: ```json
+{
+  "title": "【语文】2023年全国甲卷6篇优秀范文展示~",
+  "date": "2023-06-27",
+  "author": "布局未来语文中心",
+  "essays": [
+    {
+      "title": "乘科技之翼，做时间主人",
+      "author": "四川一考生",
+      "highlights": "科技的发展改变了人类与时间的关系，但更精确的计时和更强的时间观念并不保证我们能更好地利用时间。我们需要回归到科技应为我们所用，时间应为我们所掌的理念。",
+      "analysis": "文章通过对比不同人利用科技的方式，强调了科技作为工具的重要性，呼吁人们成为时间的主宰。"
+    },
+    {
+      "title": "破技术之约束，做时间的主人",
+      "author": "广西一考生",
+      "highlights": "技术的进步是人类的自我超越，但过度依赖技术可能使人成为时间的奴隶。文章提出应认清科技对时间的影响，独立自主地安排生活节奏。",
+      "analysis": "文章深入思考了技术对时间的影响，既肯定了技术的助益，又揭示了过度依赖技术可能带来的问题，层次分明，论述有序。"
+    },
+    {
+      "title": "我们是时间的指挥者，还是被指挥者？",
+      "author": "贵州一考生",
+      "highlights": "科技的发展让我们得以更好地掌控时间，但也可能让我们成为时间的仆人。文章探讨了如何在科技与时间之间找到平衡。",
+      "analysis": "文章通过具体例子和名言，展示了科技与时间的双重关系，呼吁人们善用科技，成为时间的真正主人。"
+    },
+    {
+      "title": "时间的奏鸣：科技的指挥与我们的舞动",
+      "author": "西藏一考生",
+      "highlights": "科技让我们得以更好地掌控时间，但也可能让我们迷失方向。文章反思了如何在科技的洪流中保持自我，成为时间的舞者。",
+      "analysis": "文章以舞蹈为比喻，形象地描述了科技与时间的关系，呼吁人们在科技的辅助下自由驾驭时间。"
+    },
+    {
+      "title": "时间的主人与仆人",
+      "author": "四川一考生",
+      "highlights": "科技带来的便利可能使我们过于依赖技术，忘记时间的本质。文章提出需要在忙碌的生活中找到平衡，给自己留出“我”时间。",
+      "analysis": "文章反思了科技对时间的影响，强调了生活平衡的重要性，呼吁人们正确看待时间，保留对生活的热爱。"
+    },
+    {
+      "title": "万端激流 一芯烛火",
+      "author": "广西一考生",
+      "highlights": "技术的发展如洪流冲击我们的生活，但我们的情感和热爱仍如烛火燃烧。文章探讨了如何在技术发展中保持自我，和谐共处。",
+      "analysis": "文章以洪流和烛火为比喻，深刻反思了技术与时间的关系，呼吁人们在技术冲击中保持坚定，和谐共处。"
+    }
+  ],
+  "source": "搜狐网",
+  "link": "https://www.sohu.com/a/691481870_121118943"
+}
+```
 
  AIMessage 
 
@@ -175,7 +258,7 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 🔍  Searched for "2023 高考满分作文 全国乙卷 议论文 记叙文 得分亮点 时代特色" in Google
 
  AIMessage 
 
@@ -184,7 +267,7 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 🖱️  Clicked button with index 18: 2023年全国各地语文卷写作分析汇总
 
  AIMessage 
 
@@ -193,7 +276,13 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 📄  Extracted from page
+: ```json
+{
+  "extracted_links": [],
+  "summary": "The page provides a comprehensive analysis of the 2023 Chinese college entrance exam essay topics from various regions across China. It includes detailed breakdowns of each essay prompt, highlighting their themes, requirements, and unique characteristics. The analysis is divided into three main parts: the essay topics themselves, the distinctive features of the essay questions, and an in-depth analysis of each regional essay topic. The author, '花生哥聊升学规划', offers insights into how students might approach these essays, including potential angles for argumentation, structural advice, and stylistic recommendations. However, the page does not contain direct links to full essays or additional resources related to the 2023 exams."
+}
+```
 
  AIMessage 
 
@@ -202,7 +291,7 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 🔍  Searched for "2023 高考满分作文 新课标卷 议论文 记叙文 得分亮点 时代特色" in Google
 
  AIMessage 
 
@@ -211,97 +300,277 @@ Action result: 🖱️  Clicked button with index 19: HTML
 
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 19: HTML
+Action result: 🖱️  Clicked button with index 24: 2023年新课标I卷高考作文范文赏析—中国教育在线
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 📄  Extracted from page
+: ```json
+{
+  "page_title": "2023年新课标I卷高考作文范文赏析 —中国教育在线",
+  "extraction_goal": "Extract the content of the 2023 New Curriculum Standard Exam (新课标卷) essays, including their highlights and analysis.",
+  "content": [
+    {
+      "essay_title": "故事的力量",
+      "author": "任冠青",
+      "content": "卡尔维诺是我特别喜欢的作者，可他那本《树上的男爵》却在我书架上荒废了很久。原因无他：人物设定实在太过荒唐了。从十二岁的翩翩少年，到六十五岁的垂垂老者，主人公在树上整整生活了五十三年，而且自上树后，他的双脚从未落到地面。这一切，都让我觉得不可思议，虚无缥缈。\n\n然而，一次偶然的翻阅，却让我完全被震慑住了。没有遮风避雨的房间，可以铺上睡袋、搭建树屋;没有水龙头送来的自来水，可以从山泉处引流;没有“饭来张口”的便利条件，则可通过打猎、以物易物的方式养活自己……跟着作者飞扬的思绪读下去，我的诸多疑问都瞬间烟消云散，也开始重新审视自己是否被世俗繁杂的条条框框迷了眼。最终，导向了卡尔维诺真正想表达的那个道理：逃离束缚，你永远都有追求真实自我的空间。\n\n你看，这就是好故事的力量。“做自己”的道理说起来很简单，可当故事慢慢铺陈开来，将突破世俗限制的重重枷锁摆出来，呈现出主人公曾经历过的犹疑、不安、再确认，那份最终的决绝出走、对自由的向往才犹显珍贵。这一刻，曾经耳熟能详的道理不再干瘪空洞，好故事调动着人们的情绪，实现了跨越时空、触动人心的对话。\n\n语言，是人类最伟大的发明之一，而好的故事，永远具有超乎想象的力量。比如，那些经久不衰的童话——我们都知道，白雪公主是虚构的，小红帽和狼外婆不曾存在过，可这并不妨碍孩子们从中学会善良的意义和智慧的价值;再如，《漫长的季节》《平原上的摩西》等现实主义作品——穿透“东北文艺复兴”故事中悬疑的表象，我们才得以更深切地理解那里的过往和现实;还有类似《红楼梦》《了不起的盖茨比》《悲惨世界》等来自不同国家、不同时代的经典著作——它们就像是一道道神奇的桥梁，帮助我们消除偏见、唤起共鸣，了解不同民族的文化特点，从一个个小切口洞悉整个时代的斑斓万象。\n\n好故事的力量无所不在，它们已然深深地嵌入历史文化的脉络中，潜移默化地塑造着每个人的思想和价值观。因此，除了条条列举好故事的魔力，也许有一个办法更为直接：想象它们消失后的样子。没有《世说新语》中那一个个惟妙惟肖的故事，“魏晋风度”便从此失去了“画面感”;当电影不复存在，或许我们永远都不会了解到世界另一个角落的人们在经历着什么;当家族和民族故事的讲述传统断裂了，我们也将为自己是谁、来自何方等终极问题而困惑迷茫……\n\n所以，我们永远需要好的故事，需要情感的共鸣，需要智慧的启迪，需要延续和传承。",
+      "highlights": [
+        "好故事的力量在于它能触动心灵、启迪智慧，改变一个人的命运，展现一个民族的形象。",
+        "通过《树上的男爵》的例子，阐述了故事如何帮助人们重新审视自我和世俗的束缚。",
+        "列举了童话、现实主义作品和经典著作等不同类型的故事，说明它们在不同层面上的影响力。",
+        "强调了故事在历史文化传承中的重要性，以及它们对个人和集体思想的塑造作用。"
+      ],
+      "analysis": "这篇作文通过具体例子和广泛引用的文学作品，深入探讨了故事的多重力量。作者从个人阅读体验出发，逐步扩展到文化和社会层面，论证了故事在情感共鸣、智慧启迪和文化传承中的不可替代作用。文章结构清晰，论点鲜明，语言生动，是一篇优秀的范文。"
+    }
+  ],
+  "additional_info": {
+    "exam_paper": "新课标I卷",
+    "exam_year": "2023",
+    "source": "中国教育在线",
+    "publish_date": "2023-06-07",
+    "url": "https://gaokao.eol.cn"
+  }
+}
+```
+
+ AIMessage 
+
+
+ ToolMessage 
+
+
+ HumanMessage 
+Action result: 🔍  Searched for "2023 高考满分作文 全国乙卷 议论文 记叙文 得分亮点 时代特色" in Google
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://jsfiddle.net/
+Current url: https://www.google.com/search?q=2023%20%E9%AB%98%E8%80%83%E6%BB%A1%E5%88%86%E4%BD%9C%E6%96%87%20%E5%85%A8%E5%9B%BD%E4%B9%99%E5%8D%B7%20%E8%AE%AE%E8%AE%BA%E6%96%87%20%E8%AE%B0%E5%8F%99%E6%96%87%20%E5%BE%97%E5%88%86%E4%BA%AE%E7%82%B9%20%E6%97%B6%E4%BB%A3%E7%89%B9%E8%89%B2&udm=14
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://codepen.io/sschepis/pen/WbbVOpm', title='请稍候…'), TabInfo(page_id=2, url='https://jsfiddle.net/', title='JSFiddle - Code Playground')]
+[TabInfo(page_id=0, url='https://www.google.com/search?q=2023%20%E9%AB%98%E8%80%83%E6%BB%A1%E5%88%86%E4%BD%9C%E6%96%87%20%E5%85%A8%E5%9B%BD%E4%B9%99%E5%8D%B7%20%E8%AE%AE%E8%AE%BA%E6%96%87%20%E8%AE%B0%E5%8F%99%E6%96%87%20%E5%BE%97%E5%88%86%E4%BA%AE%E7%82%B9%20%E6%97%B6%E4%BB%A3%E7%89%B9%E8%89%B2&udm=14', title='2023 高考满分作文 全国乙卷 议论文 记叙文 得分亮点 时代特色 - Google 搜索')]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
-AN
-Run
-Go PRO
-Your recent fiddles
-Collections
-PRO
-Resources
-URL
-cdnjs
-Async requests
-Changelog
-JSFiddle Apps
-Color Palette Generator
-Sign in
-Join us May 30th for world's largest hackathon for non-devs and vibe coders. $1M+ Prize pool presented by Bolt.new
-ads via Carbon
-HTML
-1
-JavaScript
-1
-CSS
-1
-Result
-Console
-0
-0
-0
-0
-JSFiddle Console. Turn on/off in Editor settings.
-Start with a boilerplate:
-Tailwind Checkboxes
-Import a JS Module
-jQuery
-React
-React + JSX
-Preact
-TypeScript
-CoffeeScript
-SCSS
-CSS Grid
-Bootstrap
-PostCSS
-Code panel options
-Change code languages, preprocessors and plugins
-HTML
-JavaScript
-CSS
-Language
-HTML
-HAML
-Doctype
-[0]<select doctype>XHTML 1.0 Strict
-XHTML 1.0 Transitional
-HTML 5
-HTML 4.01 Strict
-HTML 4.01 Transitional
-HTML 4.01 Frameset/>
-[1]<a />
-Set fiddle expiration
-1 day
-10 days
-1 month
-6 months
-1 year
-Keep forever
-... 92 pixels below - scroll or extract content to see more ...
-Current step: 14/100Current date and time: 2025-05-25 22:39
+无障碍功能链接
+跳到主要内容
+无障碍功能帮助
+无障碍功能反馈
+[0]<a Google 首页/>
+[1]<textarea ;combobox;搜索;false;q>2023 高考满分作文 全国乙卷 议论文 记叙文 得分亮点 时代特色/>
+[2]<div button;清除/>
+[3]<div 按语音搜索;button/>
+[4]<div 按图搜索;button/>
+[5]<button submit;搜索/>
+[6]<div button;设置>快捷设置/>
+[7]<a false;button;Google 应用/>
+[8]<a 登录/>
+过滤条件和主题
+[9]<a link>全部/>
+[10]<a link>新闻/>
+[11]<a link>短视频/>
+[12]<a link>航班/>
+[13]<a link>网页/>
+[14]<a link>财经/>
+[15]<a link>图片/>
+[16]<div false;button>更多/>
+[17]<div false;button>工具/>
+搜索结果
+[18]<a 2023年全国各地语文卷写作分析汇总
+知乎专栏
+https://zhuanlan.zhihu.com
+› .../>
+[19]<img />
+[20]<div 关于这条与“知乎专栏”相关的结果;button/>
+2023年6月9日
+—
+长文预警！
+2023
+年
+高考
+语文已经考试结束，特对
+全国
+各卷写作题目进行分析汇总，希望对本届
+高考
+生估分以及
+高考
+后来者有一定的帮助： 第一部分：
+2023全国
+各地 ...
+[21]<a 新鲜出炉！2023年全国各地高考作文试题汇总
+新华网
+http://www.xinhuanet.com
+› edu › 20230607/>
+[22]<img />
+[23]<div 关于这条与“新华网”相关的结果;button/>
+2023年6月7日
+—
+要求：选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。
+全国乙卷
+... 请以“续航”为题目，写一篇
+议论文
+。
+缺少字词：
+满分
+‎
+得分
+‎
+亮点
+‎
+时代
+‎
+特色
+[24]<a 2023年高考全国乙卷作文命题思路与解析—中国教育在线
+中国教育在线高考
+https://gaokao.eol.cn
+› 202306 › t20230607_2431246/>
+[25]<img />
+[26]<div 关于这条与“中国教育在线高考”相关的结果;button/>
+2023年6月7日
+—
+本
+作文
+题的两个材料，分别出自上述两个讲话，针对的是国际关系、文明互鉴等
+时代
+命题，揭示的道理却是普遍的，语言生动形象，蕴含着大智慧。 材料一，吹灭别人的 ...
+缺少字词：
+记叙文
+‎
+亮点
+[27]<a 历年语文高考满分作文（10篇）
+夸克文档
+https://doc.quark.cn
+› jiaoyukaoshi-zuowen-zuowen/>
+[28]<img />
+[29]<div button;关于这条与“夸克文档”相关的结果/>
+本文收录了历年语文
+高考满分作文
+中的10篇佳作，包括个人成长故事和校园四季美景。文章通过细腻的笔触描绘了主人公从失去双手到重新找到生活的意义的过程，以及校园在不同 ...
+[30]<a 2023年高考语文全国卷试题评析
+中国教育在线高考
+https://gaokao.eol.cn
+› 202306 › t20230607_2431107/>
+[31]<img />
+[32]<div 关于这条与“中国教育在线高考”相关的结果;button/>
+2023年6月7日
+—
+点击查看：
+2023全国
+各省
+高考作文
+题目及历年优秀
+作文
+.
+2023
+年吉林
+高考作文
+题目公布. 1 共1 页. 最新
+高考作文
+10个热点主题（主题阐说+经典事例+严谨论证段）.
+缺少字词：
+议论
+‎
+记叙文
+[33]<a 湘伴|2023年高考作文出炉，你会怎么写？
+华声在线
+https://hunan.voc.com.cn
+› news › 202306/>
+[34]<img />
+[35]<div button;关于这条与“华声在线”相关的结果/>
+2023年6月7日
+—
+从每年
+高考作文
+命题趋势来看，归根结底考核的都是学生的综合素养能力，希望学生成长为“擅观察、擅思辨、擅表达、擅应用”的人才。
+高考作文
+印刻
+时代
+记忆、承载 ...
+缺少字词：
+得分
+‎
+特色
+[36]<a 速递！2023年高考全国卷语文作文题来了
+新华网
+http://www.xinhuanet.com
+› edu › 20230607/>
+[37]<img />
+[38]<div 关于这条与“新华网”相关的结果;button/>
+2023年6月7日
+—
+2023
+年
+高考
+全国卷语文
+作文
+... 请写一篇文章。 要求：选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。
+全国乙卷
+.
+缺少字词：
+满分
+‎
+议论
+‎
+记叙文
+‎
+得分
+‎
+亮点
+‎
+时代
+‎
+特色
+[39]<a 2024年全国高考作文题目总汇
+华禹教育网
+http://www.huaue.com
+› .../>
+[40]<img />
+[41]<div 关于这条与“华禹教育网”相关的结果;button/>
+要求：选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。
+全国 乙卷
+...
+议论文
+或
+记叙文
+。这三句话分别是：1、世上本没有路，走的人多了 ...
+缺少字词：
+得分
+‎
+特色
+[42]<a 历年高考满分作文汇总发布
+高考网
+https://www.gaokao.com
+› gkzw › gkmfzw/>
+[43]<img />
+[44]<div button;关于这条与“高考网”相关的结果/>
+高考满分作文
+提供历年
+高考满分作文
+，
+全国高考满分作文
+及历年
+高考满分作文
+，同时还提供各地区的
+高考满分作文
+作文大全。
+... 966 pixels below - scroll or extract content to see more ...
+Current step: 14/100Current date and time: 2025-06-02 01:47
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Success - Successfully navigated to JSFiddle and accessed the HTML section.",
-    "memory": "Step 1: Opened JSFiddle. Step 2: Accessed the HTML section. Step 3: Ready to write the HTML fireworks code. Currently in the HTML editor of JSFiddle.",
-    "next_goal": "Write the HTML fireworks code in the provided editor."
+    "evaluation_previous_goal": "Success - Successfully searched for essays from the 2023 National Exam (\u4e59\u5377).",
+    "memory": "Found search results for essays from the 2023 National Exam (\u4e59\u5377). 2 out of 5 essays analyzed so far. Next step is to explore the search results for links to full essays.",
+    "next_goal": "Click on a relevant link to access full essays."
   },
   "action": [
     {
-      "input_text": {
-        "index": 0,
-        "text": "<!DOCTYPE html>\n<html>\n<head>\n    <title>HTML Fireworks Effect</title>\n    <style>"
+      "click_element": {
+        "index": 24
       }
     }
   ]

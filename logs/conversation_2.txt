@@ -70,15 +70,14 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """以下是淘宝上销量和口碑较好的高性价比显示屏推荐，涵盖不同价位和用途（数据综合自淘宝热销榜及用户评价）：
+Your ultimate task is: """优化后的提问建议（突出关键信息）：
 
----
+"请帮我【在淘宝平台】搜索【高销量】的【蓝牙耳机】，要求：1) 按销量排序 2) 显示前20名商品 3) 包含价格区间和店铺评分"
 
-### **【入门级办公/家用】（500-1000元）**
-1. **小米Redmi显示器1A 23.8英寸**  
-   - 价格：¥549-599  
-   - 参数：1080P IPS面板/60Hz/低蓝光  
-   - 优势：小米品控、超
+优化说明：
+1. 使用【】强调核心需求（平台/排序方式/商品类型）
+2. 将模糊的"比较高"量化为具体筛选条件
+3. 增加关键筛选维度（价格
 注意：1.回复必须用中文
 2.末位附上所有数据来源的完整网址链接
 """. If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
@@ -104,14 +103,14 @@ Available tabs:
 [TabInfo(page_id=0, url='about:blank', title='')]
 Interactive elements from top layer of the current page inside the viewport:
 empty page
-Current step: 1/100Current date and time: 2025-06-02 01:02
+Current step: 1/100Current date and time: 2025-06-02 02:35
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Unknown - No previous actions to evaluate",
-    "memory": "Starting the task to gather information about high-value displays on Taobao. Currently, no steps have been completed.",
-    "next_goal": "Navigate to Taobao to search for high-value displays."
+    "evaluation_previous_goal": "Unknown - No previous actions have been taken yet.",
+    "memory": "Starting the task to search for high-sales Bluetooth earphones on Taobao. Steps completed: 0/10.",
+    "next_goal": "Navigate to Taobao's search page for Bluetooth earphones."
   },
   "action": [
     {

@@ -70,19 +70,18 @@ Common action sequences:
 Your responses must be always JSON with the specified format.
 
  HumanMessage 
-Your ultimate task is: """以下是淘宝/京东销量较高的蓝牙鼠标推荐（按价格排序，数据来自公开平台）：
+Your ultimate task is: """优化后的提问（突出关键词+清晰需求）：
 
----
+"请帮我精选3-5篇2023年最新高考满分作文，要求：
+1. 重点突出【高考真题】来源（如全国卷/新高考卷等）
+2. 包含【议论文】和【记叙文】两种文体范例
+3. 每篇需附【得分亮点】分析
+4. 优先选择具有【时代特色】的优质范文"
 
-### **高性价比款（50-100元）**
-1. **罗技 Pebble 鹅卵石**  
-   - 价格：¥89-99  
-   - 特点：超薄静音、蓝牙/2.4G双模、18个月续航  
-   - 月销量：10万+  
-
-2. **小米无线蓝牙鼠标 Lite**  
-  
-['回复必须用中文', '末位附上所有数据来源的完整网址链接']""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
+（说明：通过数字分点明确
+注意：1.回复必须用中文
+2.末位附上所有数据来源的完整网址链接
+""". If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual.
 
  HumanMessage 
 Example output:
@@ -103,7 +102,7 @@ Browser started
 
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.taobao.com
+Action result: 🔍  Searched for "2023 高考满分作文 全国卷 新高考卷 议论文 记叙文 得分亮点 时代特色" in Google
 
  AIMessage 
 
@@ -112,22 +111,7 @@ Action result: 🔗  Opened new tab with https://www.taobao.com
 
 
  HumanMessage 
-Action result: ⌨️  Input 蓝牙鼠标 into index 17
-
- HumanMessage 
-Action result: 🖱️  Clicked button with index 16: 搜索
-
- AIMessage 
-
-
- ToolMessage 
-
-
- HumanMessage 
-Action result: ⌨️  Input 蓝牙鼠标 into index 17
-
- HumanMessage 
-Action result: 🖱️  Clicked button with index 16: 搜索
+Action result: 🖱️  Clicked button with index 18: 新鲜出炉！2023年全国各地高考作文试题汇总
 
  AIMessage 
 
@@ -139,68 +123,57 @@ Action result: 🖱️  Clicked button with index 16: 搜索
 Action result: 📄  Extracted from page
 : ```json
 {
-  "top_selling_bluetooth_mice": [
+  "page_title": "新鲜出炉！2023年全国各地高考作文试题汇总-新华网",
+  "source": "新华网",
+  "date": "2023-06-07",
+  "content": [
     {
-      "name": "线条小狗联名倍思无线蓝牙鼠标静音苹果华为平板人体工学鼠标",
-      "price": "¥53.81",
-      "features": "4000dpi, IP联名款",
-      "monthly_sales": "8万+人付款"
+      "exam": "全国甲卷",
+      "prompt": "人们因技术发展得以更好地掌控时间，但也有人因此成了时间的仆人。这句话引发了你怎样的联想与思考？请写一篇文章。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
     },
     {
-      "name": "联想生态异能者无线蓝牙鼠标轻音办公滑鼠双模电脑鼠标",
-      "price": "¥32.26",
-      "features": "1600dpi, 无线蓝牙双模",
-      "monthly_sales": "1万+人付款"
+      "exam": "全国乙卷",
+      "prompt": "吹灭别人的灯，并不会让自己更加光明；阻挡别人的路，也不会让自己行得更远。'一花独放不是春，百花齐放春满园。'如果世界上只有一种花朵，就算这种花朵再美，那也是单调的。以上两则材料出自习近平总书记的讲话，以生动形象的语言说出了普遍的道理。请据此写一篇文章，体现你的认识与思考。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
     },
     {
-      "name": "无线鼠标笔记本静音蓝牙可充电款适用戴尔华硕联想小米华为电脑",
-      "price": "¥15.17",
-      "features": "16000dpi, 无线",
-      "monthly_sales": "8000+人付款"
+      "exam": "新课标I卷",
+      "prompt": "好的故事，可以帮我们更好地表达和沟通，可以触动心灵、启迪智慧；好的故事，可以改变一个人的命运，可以展现一个民族的形象……故事是有力量的。以上材料引发了你怎样的联想和思考？请写一篇文章。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
     },
     {
-      "name": "小米无线蓝牙双模鼠标2无线2.4G滑鼠轻音办公笔记本电脑蓝牙鼠标",
-      "price": "¥64.76",
-      "features": "光电, 淘宝秒杀鼠标热销榜·第8名",
-      "monthly_sales": "6万+人付款"
+      "exam": "新课标II卷",
+      "prompt": "本试卷语言文字运用II提到的'安静一下不被打扰'的想法，在当代青少年中也不鲜见。青少年在学习、生活中，有时希望有一个自己的空间，放松，沉淀，成长。请结合以上材料写一篇文章。",
+      "requirements": "选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。"
     },
     {
-      "name": "英菲克M1二代无线鼠标蓝牙静音无声typec可充电笔记本男女生无限",
-      "price": "¥22.49",
-      "features": "2400dpi, 光电",
-      "monthly_sales": "10万+人付款"
+      "exam": "2023年北京高考作文题",
+      "options": [
+        {
+          "title": "续航",
+          "prompt": "'续航'一词，原指连续航行，今天在使用中被赋予了新的含义，如为青春续航、科技为经济发展续航等。请以'续航'为题目，写一篇议论文。",
+          "requirements": "论点明确，论据充实，论证合理；语言流畅，书写清晰。"
+        },
+        {
+          "title": "亮相",
+          "prompt": "舞台上，戏曲演员有登场亮相的瞬间。生活中也有许多亮相时刻：国旗下的讲话，研学成果的汇报，新产品的发布……每一次亮相，都受到众人关注；每一次亮相，也会有一段故事。请以'亮相'为题目，写一篇记叙文。",
+          "requirements": "思想健康，内容充实、合理，有细节描写；语言流畅，书写清晰。"
+        }
+      ]
     },
     {
-      "name": "英菲克M1无线鼠标蓝牙静音无声笔记本电脑可充电男女生适用于苹果",
-      "price": "¥18.78",
-      "features": "2400dpi, 光电",
-      "monthly_sales": "50万+人付款"
+      "exam": "2023年高考语文（天津卷）",
+      "prompt": "与有肝胆人共事，从无字句处读书。一代人有一代人的使命与挑战，一代人有一代人的责任和担当。一个世纪前，在津求学的青年周恩来撰写了这副对联，在交友处事与读书求知方面警勉自己。品读此联，你有怎样的联想和思考？请任选角度，结合自己的体验与感悟，写一篇文章。",
+      "requirements": "自拟标题；文体不限（诗歌除外），文体特征明显；不少于800字；不得抄袭，不得套作。"
     },
     {
-      "name": "HUAWEI 蓝牙鼠标（第二代）青春版 3设备切换 靠近发现 轻巧便携",
-      "price": "¥88.95",
-      "features": "光电, 5号电池蓝牙",
-      "monthly_sales": "6万+人付款"
-    },
-    {
-      "name": "无线鼠标蓝牙静音无声充电游戏电竞台式笔记本电脑办公通用女生男",
-      "price": "¥29.15",
-      "features": "2400dpi, 光电",
-      "monthly_sales": "6000+人付款"
-    },
-    {
-      "name": "联想生态品牌异能者无线鼠标蓝牙无线充电笔记本电脑办公家用多彩",
-      "price": "¥31.26",
-      "features": "1600dpi, 无线",
-      "monthly_sales": "1万+人付款"
-    },
-    {
-      "name": "【新品】倍思无线蓝牙鼠标静音适用苹果macbook女生电脑人体工学",
-      "price": "¥44.61",
-      "features": "4000dpi, 光电",
-      "monthly_sales": "400+人付款"
+      "exam": "2023年上海高考语文作文题",
+      "prompt": "No prompt provided in the given content.",
+      "requirements": "No requirements provided in the given content."
     }
-  ]
+  ],
+  "notes": "The page does not contain direct links to full essays but provides the prompts and requirements for the 2023 college entrance exam essays from various regions in China."
 }
 ```
 
@@ -211,7 +184,7 @@ Action result: 📄  Extracted from page
 
 
  HumanMessage 
-Action result: 🔗  Opened new tab with https://www.jd.com
+Action result: 🔍  Searched for "2023 高考满分作文 全国甲卷 人们因技术发展得以更好地控制时间" in Google
 
  AIMessage 
 
@@ -220,257 +193,201 @@ Action result: 🔗  Opened new tab with https://www.jd.com
 
 
  HumanMessage 
-Action result: ⌨️  Input 蓝牙鼠标 into index 7
+Action result: 🖱️  Clicked button with index 18: 【语文】2023年全国甲卷6篇优秀范文展示~_时间_科技
+
+ AIMessage 
+
+
+ ToolMessage 
+
 
  HumanMessage 
-Action result: 🖱️  Clicked button with index 9: 
+Action result: 📄  Extracted from page
+: ```json
+{
+  "title": "【语文】2023年全国甲卷6篇优秀范文展示~",
+  "date": "2023-06-27",
+  "author": "布局未来语文中心",
+  "essays": [
+    {
+      "title": "乘科技之翼，做时间主人",
+      "author": "四川一考生",
+      "highlights": "科技的发展改变了人类与时间的关系，但更精确的计时和更强的时间观念并不保证我们能更好地利用时间。我们需要回归到科技应为我们所用，时间应为我们所掌的理念。",
+      "analysis": "文章通过对比不同人利用科技的方式，强调了科技作为工具的重要性，呼吁人们成为时间的主宰。"
+    },
+    {
+      "title": "破技术之约束，做时间的主人",
+      "author": "广西一考生",
+      "highlights": "技术的进步是人类的自我超越，但过度依赖技术可能使人成为时间的奴隶。文章提出应认清科技对时间的影响，独立自主地安排生活节奏。",
+      "analysis": "文章深入思考了技术对时间的影响，既肯定了技术的助益，又揭示了过度依赖技术可能带来的问题，层次分明，论述有序。"
+    },
+    {
+      "title": "我们是时间的指挥者，还是被指挥者？",
+      "author": "贵州一考生",
+      "highlights": "科技的发展让我们得以更好地掌控时间，但也可能让我们成为时间的仆人。文章探讨了如何在科技与时间之间找到平衡。",
+      "analysis": "文章通过具体例子和名言，展示了科技与时间的双重关系，呼吁人们善用科技，成为时间的真正主人。"
+    },
+    {
+      "title": "时间的奏鸣：科技的指挥与我们的舞动",
+      "author": "西藏一考生",
+      "highlights": "科技让我们得以更好地掌控时间，但也可能让我们迷失方向。文章反思了如何在科技的洪流中保持自我，成为时间的舞者。",
+      "analysis": "文章以舞蹈为比喻，形象地描述了科技与时间的关系，呼吁人们在科技的辅助下自由驾驭时间。"
+    },
+    {
+      "title": "时间的主人与仆人",
+      "author": "四川一考生",
+      "highlights": "科技带来的便利可能使我们过于依赖技术，忘记时间的本质。文章提出需要在忙碌的生活中找到平衡，给自己留出“我”时间。",
+      "analysis": "文章反思了科技对时间的影响，强调了生活平衡的重要性，呼吁人们正确看待时间，保留对生活的热爱。"
+    },
+    {
+      "title": "万端激流 一芯烛火",
+      "author": "广西一考生",
+      "highlights": "技术的发展如洪流冲击我们的生活，但我们的情感和热爱仍如烛火燃烧。文章探讨了如何在技术发展中保持自我，和谐共处。",
+      "analysis": "文章以洪流和烛火为比喻，深刻反思了技术与时间的关系，呼吁人们在技术冲击中保持坚定，和谐共处。"
+    }
+  ],
+  "source": "搜狐网",
+  "link": "https://www.sohu.com/a/691481870_121118943"
+}
+```
 
  HumanMessage 
 [Task history memory ends]
 [Current state starts here]
 The following is one-time information - if you need to remember it write it to memory:
-Current url: https://www.jd.com/?from=pc_search_sd
+Current url: https://www.sohu.com/a/691481870_121118943
 Available tabs:
-[TabInfo(page_id=0, url='about:blank', title=''), TabInfo(page_id=1, url='https://www.taobao.com/', title='淘宝'), TabInfo(page_id=2, url='https://s.taobao.com/search?commend=all&ie=utf8&initiative_id=tbindexz_20170306&page=1&preLoadOrigin=https%3A%2F%2Fwww.taobao.com&q=%E8%93%9D%E7%89%99%E9%BC%A0%E6%A0%87&search_type=item&sourceId=tb.index&spm=a21bo.jianhua%2Fa.search_.0&ssid=s5-e&tab=all', title='蓝牙鼠标_淘宝搜索'), TabInfo(page_id=3, url='https://www.jd.com/?from=pc_search_sd', title='京东(JD.COM)-正品低价、品质保障、配送及时、轻松购物！')]
+[TabInfo(page_id=0, url='https://www.sohu.com/a/691481870_121118943', title='【语文】2023年全国甲卷6篇优秀范文展示~_时间_科技_技术')]
 Interactive elements from top layer of the current page inside the viewport:
 [Start of page]
-[0]<a 你好，请登录/>
-[1]<a 免费注册/>
-[2]<a 我的订单/>
-[3]<a 我的京东/>
-
-[4]<a 京东会员/>
-[5]<a 企业采购/>
-客户服务
-
-网站导航
-
-手机京东
-[6]<a 京东/>
-[7]<input 搜索;text/>
-
-[8]<a />
-[9]<button 搜索>/>
-[10]<a 家用电器/>
-[11]<a 手机/>
-/
-[12]<a 运营商/>
-/
-[13]<a 数码/>
-[14]<a 电脑/>
-/
-[15]<a 办公/>
-/
-[16]<a 文具用品/>
-[17]<a 家居/>
-/
-[18]<a 家具/>
-/
-[19]<a 家装/>
-/
-[20]<a 厨具/>
-[21]<a 男装/>
-/
-[22]<a 女装/>
-/
-[23]<a 童装/>
-/
-[24]<a 内衣/>
-[25]<a 美妆/>
-/
-[26]<a 个护清洁/>
-/
-[27]<a 宠物/>
-[28]<a 女鞋/>
-/
-[29]<a 箱包/>
-/
-[30]<a 钟表/>
-/
-[31]<a 珠宝/>
-[32]<a 男鞋/>
-/
-[33]<a 运动/>
-/
-[34]<a 户外/>
-[35]<a 房产/>
-/
-[36]<a 汽车/>
-/
-[37]<a 汽车用品/>
-[38]<a 母婴/>
-/
-[39]<a 玩具乐器/>
-[40]<a 食品/>
-/
-[41]<a 酒类/>
-/
-[42]<a 生鲜/>
-/
-[43]<a 特产/>
-艺术
-/
-礼品鲜花
-/
-农牧园艺
-京东买药
-/
-计生情趣
-图书
-/
-文娱
-/
-教育
-/
-电子书
-机票
-/
-酒店
-/
-旅游
-/
-生活
-支付
-/
-白条
-/
-保险
-/
-企业金融
-安装
-/
-维修
-/
-清洗
-/
-二手
-元器件
-/
-原材料
-/
-五金机电
-品类齐全，轻松购物
-多仓直发，极速配送
-好
-正品行货，精致服务
-省
-天天低价，畅选无忧
-购物指南
-[44]<a 购物流程/>
-[45]<a 会员介绍/>
-[46]<a 生活旅行/>
-[47]<a 常见问题/>
-[48]<a 大家电/>
-[49]<a 联系客服/>
-配送方式
-[50]<a 上门自提/>
-[51]<a 211限时达/>
-[52]<a 配送服务查询/>
-[53]<a 配送费收取标准/>
-支付方式
-[54]<a 货到付款/>
-[55]<a 在线支付/>
-[56]<a 分期付款/>
-[57]<a 公司转账/>
-售后服务
-[58]<a 售后政策/>
-[59]<a 价格保护/>
-[60]<a 退款说明/>
-[61]<a 返修/退换货/>
-[62]<a 取消订单/>
-特色服务
-[63]<a 夺宝岛/>
-[64]<a DIY装机/>
-[65]<a 延保服务/>
-[66]<a 京东E卡/>
-[67]<a 京东通信/>
-[68]<a 京鱼座智能/>
-[69]<a 关于我们/>
-|
-[70]<a 联系我们/>
-|
-[71]<a 联系客服/>
-|
-[72]<a 合作招商/>
-|
-[73]<a 商家帮助/>
-|
-[74]<a 营销中心/>
-|
-[75]<a 手机京东/>
-|
-[76]<a 友情链接/>
-|
-[77]<a 销售联盟/>
-|
-[78]<a 京东社区/>
-|
-[79]<a 风险监测/>
-|
-[80]<a 质量公告/>
-|
-[81]<a 隐私政策/>
-|
-[82]<a 京东公益/>
-|
-[83]<a Media & IR/>
-[84]<a 京公网安备 11000002000088号/>
-|
-[85]<a 京ICP备11041704号/>
-|
-[86]<a ICP/>
-|
-[87]<a 药品医疗器械网络信息服务备案/>
-|
-[88]<a 自营医疗器械经营资质/>
-|
-[89]<a 药品网络交易第三方平台备案凭证/>
-|
-新出发京零 字第大120007号
-互联网出版许可证编号新出网证(京)字150号
-|
-[90]<a 出版物经营许可证/>
-|
-违法和不良信息举报电话：4006561155
-Copyright © 2004 - 2025  京东JINGDONG 版权所有
-|
-消费者维权热线：4006067733
-|
-[91]<a 经营证照/>
-|
-[92]<a 医疗器械第三方平台备案凭证（京）网械平台备字（2023）第00013号/>
-|
-[93]<a 营业执照/>
-|
-[94]<a 增值电信业务经营许可证/>
-京东旗下网站：
-[95]<a 京东钱包/>
-|
-[96]<a 京东云/>
-|
-网络内容从业人员违法违规行为举报电话：4006561155-3
-[97]<a 可信网站信用评估/>
-[98]<a 网络警察提醒你/>
-[99]<a 诚信网站/>
-[100]<a 中国互联网举报中心/>
-[101]<a 网络举报APP下载/>
-[102]<a 扫黄打非网举报专区/>
-[103]<a 适老化无障碍服务/>
-[104]<a 国家知识产权公共服务网/>
-... 41 pixels below - scroll or extract content to see more ...
-Current step: 7/100Current date and time: 2025-06-02 00:59
+[0]<a />
+[1]<a 新闻/>
+[2]<a 体育/>
+[3]<a 汽车/>
+[4]<a 房产/>
+[5]<a 旅游/>
+[6]<a 教育/>
+[7]<a 时尚/>
+[8]<a 科技/>
+[9]<a 财经/>
+[10]<a 娱乐/>
+更多
+[11]<a 无障碍/>
+[12]<a 关怀版/>
+[13]<a 登录/>
+[14]<a />
+[15]<img />
+[16]<a 考试资讯早班车/>
++订阅
+2.9万
+文章
+1505万
+总阅读
+[17]<a 查看TA的文章>/>
+6
+[18]<img />
+抢首评
+评论
+13
+分享
+扫码打开
+手机搜狐网
+无需下载APP
+精彩内容随时看
+【语文】2023年全国甲卷6篇优秀范文展示~
+2023-06-27 17:37
+发布于：
+安徽省
+考场直击
+阅读下面的材料，根据要求写作。
+人们因技术发展得以更好地掌控时间，但也有人因此成了时间的仆人。
+这句话引发了你怎样的联想与思考？请写一篇文章。
+要求：选准角度，确定立意，明确文体，自拟标题；不要套作，不得抄袭；不得泄露个人信息；不少于800字。
+标杆作文一
+乘科技之翼，做时间主人
+四川一考生
+同样一分钟，有人轻轻一刷，享受了一个娱乐性的短片；也有人静静一坐，学习了一项新知识。对两者而言，时间是公平的，但结果却迥然不同。前者利用科技寻求娱乐，后者则以科技为工具，提升自我。我们应努力成为后者，让科技辅助我们自我提升，主导我们的时间，成为真正的时间主宰。
+科技的发展，改变了人类与时间的关系。在古代，人们以季节更替，日出日落作为时间的衡量，然而随着科技的飞速发展，我们的时间观念也随之变革，如今我们已经能精确到秒，甚至毫秒。这是科技进步的力量，它推动我们更精确地计算时间，让我们更重视每一刻。
+但是，更精确的计时和更强的时间观念，并不能保证我们能更好地利用时间。在这个信息化的时代，虽然技术的发展为我们节省了许多时间，但往往我们省下来的时间却被短视频、电视剧、直播等“电子鸦片”所吞噬。科技本应是我们提升效率的工具，但却变成了吞噬我们时间的猛兽，这样的状况让人感到悲哀。
+我们需要回归到一个理念：科技应为我们所用，时间应为我们所掌。科技进步无疑能提升我们的效率，节省我们的时间，但对于省下来的时间，我们应该将其用于提升和发展自我。读书、旅行、交友、反思，这些都是我们能够利用时间去做的事情。当然，我们也需要适度的娱乐放松，但我们需要明白，我们是时间的主人，应该让时间更好地服务于我们，而不是被消耗在无意义的事物上。
+歌德曾说：“谁若游戏人生，他就一事无成；谁不能主宰自己，永远是一个奴隶。”这个世界因科技进步而变得越来越复杂，也越来越精彩。但我们不能因此而迷失，成为科技的奴隶，消耗我们宝贵的时间。我们应该保持清醒的头脑，利用科技为我们服务，掌控我们的时间，成为我们时间的主人。这样，我们才能成为命运的主宰。
+标杆作文二
+破技术之约束，做时间的主人
+广西一考生
+[19]<input text/>
+[20]<a 欧美服务器/>
+[21]<img />
+[22]<a 欧美服务器/>
+[23]<a erp登录/>
+[24]<img />
+[25]<a erp登录/>
+[26]<a 翻译器/>
+[27]<img />
+[28]<a 翻译器/>
+[29]<a 手写字体/>
+[30]<img />
+[31]<a 手写字体/>
+[32]<img />
+[33]<img />
+热门精选
+卢珏璇：越南中学历史教科书的中国书写与形象建构
+[34]<a 聚焦课堂促成长 ，专家引领明方向 ——邵阳市教科院专家组赴邵阳市第十一中.../>
+创纪录！郑钦文2-1力克萨姆索诺娃，赛后采访说出三句肺腑之言！
+0
+1
+2
+[38]<a 福建平潭路边骆驼被指“瘦成纸片”，当地.../>
+[39]<img />
+[40]<a 昨夜今晨宗馥莉正式接手王楚钦回应球拍受.../>
+[41]<img />
+[42]<a 生于1987年的李金玲，任职不到1年，再获提.../>
+[43]<img />
+[44]<a 美军发力，铁了心阻止大陆收台！解放军摆.../>
+[45]<img />
+[46]<a 美颜美体/>
+[47]<img />
+[48]<a 美颜美体/>
+[49]<a 新一代浏览器/>
+[50]<img />
+[51]<a 新一代浏览器/>
+[52]<a 亚洲服务器/>
+[53]<img />
+[54]<a 亚洲服务器/>
+[55]<a B站黄页推广/>
+[56]<img />
+[57]<a B站黄页推广/>
+[58]<img />
+[59]<img />
+24小时热文
+[60]<a 1/>
+[61]<img />
+[62]<a 法网-郑钦文鏖战2-1萨姆索诺娃 首进八强刷新最佳战绩/>
+[63]<a 61万
+阅读/>
+[64]<a 2/>
+[65]<img />
+[66]<a 校园生活，从狐友开始！/>
+[67]<a 190万
+阅读/>
+[68]<a 3/>
+[69]<img />
+[70]<a 黄杨钿甜已拿到北京电影学院、中央戏剧学院、中国传媒.../>
+[71]<a 137万
+阅读/>
+... 8805 pixels below - scroll or extract content to see more ...
+Current step: 7/100Current date and time: 2025-06-02 01:44
 
  RESPONSE
 {
   "current_state": {
-    "evaluation_previous_goal": "Success - Successfully searched for Bluetooth mice on JD.",
-    "memory": "Task: Find high-selling Bluetooth mice on Taobao/JD, sorted by price. Currently at step 7/100. Next: Sort the search results by price to identify high-selling Bluetooth mice.",
-    "next_goal": "Sort the search results by price on JD."
+    "evaluation_previous_goal": "Success - Extracted 6 exemplary essays for the 2023 National Exam (\u7532\u5377) with highlights and analysis.",
+    "memory": "Found and analyzed 6 essays for the 2023 National Exam (\u7532\u5377). 1 out of 5 essays analyzed so far. Next step is to search for essays from other exam regions (e.g., \u5168\u56fd\u4e59\u5377, \u65b0\u8bfe\u6807\u5377) to meet the requirement of 3-5 essays.",
+    "next_goal": "Search for essays from other exam regions (e.g., \u5168\u56fd\u4e59\u5377, \u65b0\u8bfe\u6807\u5377)."
   },
   "action": [
     {
-      "click_element": {
-        "index": 11
+      "search_google": {
+        "query": "2023 \u9ad8\u8003\u6ee1\u5206\u4f5c\u6587 \u5168\u56fd\u4e59\u5377 \u8bae\u8bba\u6587 \u8bb0\u53d9\u6587 \u5f97\u5206\u4eae\u70b9 \u65f6\u4ee3\u7279\u8272"
       }
     }
   ]
