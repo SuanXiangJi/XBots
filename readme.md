@@ -68,7 +68,8 @@ Python 3.9 及以上版本
 1、**克隆项目**
 
 ```bash
-cd AI_Agent
+git clone https://github.com/SuanXiangJi/XBots
+cd XBots
 ```
 
 2、 **安装依赖库 **
